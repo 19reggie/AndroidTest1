@@ -15,12 +15,12 @@ public class MainTest {
 		
 		
 		UpgradePackage upgradePackage = new UpgradePackage();
-		//ÏÂÔØÉı¼¶°ü
+		//ä¸‹è½½å‡çº§åŒ…
 		upgradePackage.downloadfile();
 		
 		SystemUpgrade systemUpgrade = new SystemUpgrade();
 		systemUpgrade.time_sleep(6);
-		//fastbootË¢»ú
+		//fastbootæ–¹æ³•åˆ·æœº
 		systemUpgrade.fastbootflash();
 	}
 
