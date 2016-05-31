@@ -16,60 +16,60 @@ import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPFile;
 
 /**
- * TODO<Éı¼¶°üÏÂÔØ>
+ * TODO<å‡çº§åŒ…ä¸‹è½½>
  * 
  * @author: Reggie
- * @data: 2016Äê5ÔÂ31ÈÕ ÉÏÎç10:27:03
+ * @data: 2016å¹´5æœˆ31æ—¥ ä¸Šåˆ10:27:03
  * @version: V1.0
  */
 public class UpgradePackage {
 
-	private static String url;// FTP·şÎñÆ÷hostname
-	private static String port;// FTP·şÎñÆ÷¶Ë¿ÚºÅ
-	private static String username;// FTPµÇÂ¼ÕË»§
-	private static String password;// FTPµÇÂ¼ÃÜÂë
-	private static String parentRemotePath;// FTP·şÎñÆ÷ÉÏ°æ±¾µÄ¸¸Ä¿Â¼
+	private static String url;// FTPæœåŠ¡å™¨hostname
+	private static String port;// FTPæœåŠ¡å™¨ç«¯å£å·
+	private static String username;// FTPç™»å½•è´¦æˆ·
+	private static String password;// FTPç™»å½•å¯†ç 
+	private static String parentRemotePath;// FTPæœåŠ¡å™¨ä¸Šç‰ˆæœ¬çš„çˆ¶ç›®å½•
 
 	public void downloadfile() {
-		// 1.³õÊ¼»¯½«ÊôĞÔÎÄ¼şÖĞµÄÊı¾İ¶ÁÈëµ½±¾ÀàµÄ±äÁ¿ÖĞ
+		// 1.åˆå§‹åŒ–å°†å±æ€§æ–‡ä»¶ä¸­çš„æ•°æ®è¯»å…¥åˆ°æœ¬ç±»çš„å˜é‡ä¸­
 		init();
 		FTPClient ftpC = new FTPClient();
 		try {
-			ftpC.connect(url);// Ä¬ÈÏ¶Ë¿ÚºÅ
-			// 2.µÇÂ¼FTP·şÎñÆ÷
+			ftpC.connect(url);// é»˜è®¤ç«¯å£å·
+			// 2.ç™»å½•FTPæœåŠ¡å™¨
 			ftpC.login(username, password);
-			// 3.ÇĞ»»µ½FTP¹¤×÷Ä¿Â¼
+			// 3.åˆ‡æ¢åˆ°FTPå·¥ä½œç›®å½•
 			ftpC.changeWorkingDirectory(parentRemotePath);
 			ArrayList<String> filelist = new ArrayList<String>();
 			FTPFile[] fs = ftpC.listFiles();
 			for (FTPFile ff : fs) {
 				String[] mff = ff.toString().split(" ");
 				String filename = mff[mff.length - 1].trim();
-				if (filename.matches("imgs.*")) {// ÕıÔòÆ¥Åäimgs.*
+				if (filename.matches("imgs.*")) {// æ­£åˆ™åŒ¹é…imgs.*
 					filelist.add(filename);
 					// System.out.println(filename);
 				}
 			}
-			// 5.¹ıÂË³ö·şÎñÆ÷µÄ×îĞÂµÄÉı¼¶°ü
+			// 5.è¿‡æ»¤å‡ºæœåŠ¡å™¨çš„æœ€æ–°çš„å‡çº§åŒ…
 			String latest_filelist = filelist.get(filelist.size() - 1);
-			System.out.println("FTP·şÎñÆ÷ÉÏµ±Ç°×îĞÂ°æ±¾Îª£º" + latest_filelist);
+			System.out.println("FTPæœåŠ¡å™¨ä¸Šå½“å‰æœ€æ–°ç‰ˆæœ¬ä¸ºï¼š" + latest_filelist);
 			String[] latestVersion_arr = latest_filelist.split("-");
 			String latestVersion_time = "20" + latestVersion_arr[1] + latestVersion_arr[2] + latestVersion_arr[3];
 			String current_time = currentTime();
 
-			// 6.ÅĞ¶Ï·şÎñÆ÷ÉÏµÄ×îĞÂµÄÉı¼¶°üµÄÈÕÆÚÓëµ±Ç°µÄÈÕÆÚÊÇ·ñÏàµÈ
-			// latestVersion_timeÓëcurrent_timeÏàµÈ
+			// 6.åˆ¤æ–­æœåŠ¡å™¨ä¸Šçš„æœ€æ–°çš„å‡çº§åŒ…çš„æ—¥æœŸä¸å½“å‰çš„æ—¥æœŸæ˜¯å¦ç›¸ç­‰
+			// latestVersion_timeä¸current_timeç›¸ç­‰
 			if (latestVersion_time.equals(current_time)) {
-				System.out.println("ÏÂÔØ°æ±¾ºÅÎª£º" + latest_filelist);
+				System.out.println("ä¸‹è½½ç‰ˆæœ¬å·ä¸ºï¼š" + latest_filelist);
 				String childRemotePath = parentRemotePath + latest_filelist;
-				String localPath = "d:/test_talpa_rom/" + latest_filelist;
+				String localPath = "d:/test_rom/" + latest_filelist;
 				createFile("localPath=" + localPath);
 				File f = new File(localPath);
 				if (!f.exists()) {
 					f.mkdirs();
 				}
-                //7.ÏÂÔØÉı¼¶°ü
-				System.out.println("¿ªÊ¼ÏÂÔØÉı¼¶°ü...");
+                                //7.ä¸‹è½½å‡çº§åŒ…
+				System.out.println("å¼€å§‹ä¸‹è½½å‡çº§åŒ…...");
 				ftpC.changeWorkingDirectory(childRemotePath);
 				ArrayList<String> filelist2 = new ArrayList<String>();
 				FTPFile[] fs2 = ftpC.listFiles();
@@ -83,11 +83,11 @@ public class UpgradePackage {
 					ftpC.retrieveFile(filename2, is);
 					is.close();
 				}
-				System.out.println("Éı¼¶°üÏÂÔØÍê±Ï.");
+				System.out.println("å‡çº§åŒ…ä¸‹è½½å®Œæ¯•.");
 
-			} else {// latestVersion_timeÓëcurrent_time²»ÏàµÈ
-				System.out.println("Ã»ÓĞ½ñÌìµÄ°æ±¾");
-				// ·¢ËÍÓÊ¼şÍ¨Öª
+			} else {// latestVersion_timeä¸current_timeä¸ç›¸ç­‰
+				System.out.println("æ²¡æœ‰ä»Šå¤©çš„ç‰ˆæœ¬");
+				// å‘é€é‚®ä»¶é€šçŸ¥
 
 			}
 
